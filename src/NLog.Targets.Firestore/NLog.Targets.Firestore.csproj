@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<Title>NLog Target for Firestore</Title>
+		<Description>NLog Target for Firestore supporting .NET, .NET Core 5,6</Description>
+		<CurrentYear>$([System.DateTime]::Now.ToString(yyyy))</CurrentYear>
+		<Copyright>Copyright 2022-$(CurrentYear)</Copyright>
+		<Authors>Erçağ Uysal</Authors>
+		
+		<!--Version is patched by CI-->
+		<Version>1.0.0</Version>
+		<!--AssemblyVersion only changes are major releases.-->
+		<AssemblyVersion>1.0.0</AssemblyVersion>
+
+		<PackageReleaseNotes>
+			- Add Firestore extension to NLog
+		</PackageReleaseNotes>
+		<PackageTags>NLog;Firestore;Log;Logging</PackageTags>
+		<PackageProjectUrl>https://github.com/ercag/NLog.Targets.Firestore</PackageProjectUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/ercag/NLog.Targets.Firestore</RepositoryUrl>
+
+		<SignAssembly>true</SignAssembly>
+		<DelaySign>false</DelaySign>
+		<PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NLog" Version="5.*" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+		<PackageReference Include="System.Text.Json" Version="7.0.0" />
+		<PackageReference Include="Google.Cloud.Firestore" Version="2.4.0" />
+	</ItemGroup>
+</Project>
