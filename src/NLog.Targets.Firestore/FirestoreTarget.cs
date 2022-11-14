@@ -119,20 +119,28 @@ namespace NLog.Targets.Firestore
         /// <param name="logEvent">For sync parameters</param>
         private void WriteToFirestore(LogEventInfo logEvent)
         {
-            StringBuilder logMessage = new StringBuilder();
-            logMessage.AppendLine($"CallerClassName: {logEvent.CallerClassName}\n");
-            logMessage.AppendLine($"CallerMemberName: {logEvent.CallerMemberName}\n");
-            logMessage.AppendLine($"CallerFilePath: {logEvent.CallerFilePath}\n");
-            logMessage.AppendLine($"CallerLineNumber: {logEvent.CallerLineNumber}\n");
-            logMessage.AppendLine($"LoggerName: {logEvent.LoggerName}\n");
-            logMessage.AppendLine($"Message: {logEvent.Message}\n");
-            logMessage.AppendLine($"FormattedMessage: {logEvent.FormattedMessage}\n");
+            // StringBuilder logMessage = new StringBuilder();
+            // logMessage.AppendLine($"CallerClassName: {logEvent.CallerClassName}\n");
+            // logMessage.AppendLine($"CallerMemberName: {logEvent.CallerMemberName}\n");
+            // logMessage.AppendLine($"CallerFilePath: {logEvent.CallerFilePath}\n");
+            // logMessage.AppendLine($"CallerLineNumber: {logEvent.CallerLineNumber}\n");
+            // logMessage.AppendLine($"LoggerName: {logEvent.LoggerName}\n");
+            // logMessage.AppendLine($"Message: {logEvent.Message}\n");
+            // logMessage.AppendLine($"FormattedMessage: {logEvent.FormattedMessage}\n");
 
             DocumentReference docRef = Db.Collection(Collection.Render(LogEventInfo.CreateNullEvent())).Document(logEvent.LoggerName);
             var result = docRef.SetAsync(new Dictionary<string, object>
             {
-                { $"{logEvent.SequenceID}", logMessage.ToString()}
-            }, SetOptions.MergeAll).GetAwaiter().GetResult();
+                { "id", $"{logEvent.SequenceID}"},
+                { "time", $"{logEvent.TimeStamp}"},
+                { "level", $"{logEvent.Level}"},
+                { "message", $"{logEvent.FormattedMessage}"},
+                { "logger", $"{logEvent.LoggerName}"},
+                { "callsite", $"{logEvent.CallerMemberName} - {logEvent.CallerClassName} - {logEvent.CallerLineNumber}\n{logEvent.CallerFilePath}"},
+                { "exception", $"{logEvent.Exception}"},
+                { "parameters", $"{logEvent.Parameters}"},
+                { "properties", $"{logEvent.Properties}"},
+            }, SetOptions.MergeFields("id")).GetAwaiter().GetResult();
         }
         #endregion
 
