@@ -119,8 +119,7 @@ namespace NLog.Targets.Firestore
         /// <param name="logEvent">For sync parameters</param>
         private void WriteToFirestore(LogEventInfo logEvent)
         {
-            DocumentReference docRef = Db.Collection(Collection.Render(LogEventInfo.CreateNullEvent())).Document(logEvent.LoggerName);
-            var result = docRef.SetAsync(new Dictionary<string, object>
+            var data = new Dictionary<string, object>
             {
                 { "id", $"{logEvent.SequenceID}"},
                 { "time", $"{logEvent.TimeStamp}"},
@@ -131,7 +130,11 @@ namespace NLog.Targets.Firestore
                 { "exception", $"{logEvent.Exception}"},
                 { "parameters", $"{logEvent.Parameters}"},
                 { "properties", $"{logEvent.Properties}"},
-            }, SetOptions.MergeAll).GetAwaiter().GetResult();
+            };
+            DocumentReference docRef = Db.Collection(Collection.Render(LogEventInfo.CreateNullEvent())).Document(logEvent.LoggerName);
+            var collection = docRef.Collection(DateTime.Now.ToString("yyyy-MM-dd")).Document(DateTime.Now.ToString("HH:mm:ss:fff"));//.AddAsync(data).GetAwaiter().GetResult();
+
+            var result = collection.SetAsync(data, SetOptions.MergeAll).GetAwaiter().GetResult();
         }
         #endregion
 

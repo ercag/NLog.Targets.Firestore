@@ -9,7 +9,7 @@
 		<Authors>Erçağ Uysal</Authors>
 		
 		<!--Version is patched by CI-->
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<!--AssemblyVersion only changes are major releases.-->
 		<AssemblyVersion>1.0.2</AssemblyVersion>
 
