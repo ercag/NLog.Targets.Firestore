@@ -131,10 +131,10 @@ namespace NLog.Targets.Firestore
                 { "parameters", $"{logEvent.Parameters}"},
                 { "properties", $"{logEvent.Properties}"},
             };
-            DocumentReference docRef = Db.Collection(Collection.Render(LogEventInfo.CreateNullEvent())).Document(logEvent.LoggerName);
-            var collection = docRef.Collection(DateTime.Now.ToString("yyyy-MM-dd")).Document(DateTime.Now.ToString("HH:mm:ss:fff"));//.AddAsync(data).GetAwaiter().GetResult();
+            DocumentReference docRef = Db.Collection(Collection.Render(LogEventInfo.CreateNullEvent())).Document(Guid.NewGuid().ToString());
+            //var collection = docRef.Collection(DateTime.Now.ToString("yyyy-MM-dd")).Document(DateTime.Now.ToString("HH:mm:ss:fff"));//.AddAsync(data).GetAwaiter().GetResult();
 
-            var result = collection.SetAsync(data, SetOptions.MergeAll).GetAwaiter().GetResult();
+            var result = docRef.SetAsync(data, SetOptions.MergeAll).GetAwaiter().GetResult();
         }
         #endregion
 
