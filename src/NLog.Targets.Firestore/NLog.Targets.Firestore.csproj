@@ -9,9 +9,9 @@
 		<Authors>Erçağ Uysal</Authors>
 		
 		<!--Version is patched by CI-->
-		<Version>1.0.4</Version>
+		<Version>1.0.5</Version>
 		<!--AssemblyVersion only changes are major releases.-->
-		<AssemblyVersion>1.0.4</AssemblyVersion>
+		<AssemblyVersion>1.0.5</AssemblyVersion>
 
 		<PackageReleaseNotes>
 			- Add Firestore extension to NLog

@@ -119,10 +119,12 @@ namespace NLog.Targets.Firestore
         /// <param name="logEvent">For sync parameters</param>
         private void WriteToFirestore(LogEventInfo logEvent)
         {
+            logEvent.TimeStamp = DateTime.Now.AddDays(-6);
+
             var data = new Dictionary<string, object>
             {
                 { "id", $"{logEvent.SequenceID}"},
-                { "time", $"{logEvent.TimeStamp}"},
+                { "time", $"{logEvent.TimeStamp.ToString("dd.MM.yyyy HH:mm:ss")}"},
                 { "level", $"{logEvent.Level}"},
                 { "message", $"{logEvent.FormattedMessage}"},
                 { "logger", $"{logEvent.LoggerName}"},
