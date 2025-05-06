@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -23,6 +23,9 @@ namespace NLog.Targets.Firestore
 
         [RequiredParameter]
         public Layout ProjectId { get; set; }
+
+        [RequiredParameter]
+        public Layout DatabaseId { get; set; }
 
         [RequiredParameter]
         public Layout PrivateKeyId { get; set; }
@@ -81,8 +84,8 @@ namespace NLog.Targets.Firestore
             {
                 ProjectId = ProjectId.Render(LogEventInfo.CreateNullEvent()),
                 EmulatorDetection = EmulatorDetection.EmulatorOrProduction,
-                JsonCredentials = FirestoreSettingsJson()
-
+                JsonCredentials = FirestoreSettingsJson(),
+                DatabaseId = DatabaseId.Render(LogEventInfo.CreateNullEvent())
             }.Build();
         }
         private string FirestoreSettingsJson()
@@ -107,6 +110,7 @@ namespace NLog.Targets.Firestore
                 TokenUri = TokenUri == null ? null : TokenUri.Render(LogEventInfo.CreateNullEvent()),
                 AuthProviderX509CertUrl = AuthProviderX509CertUrl == null ? null : AuthProviderX509CertUrl.Render(LogEventInfo.CreateNullEvent()),
                 ClientX509CertUrl = ClientX509CertUrl == null ? null : ClientX509CertUrl.Render(LogEventInfo.CreateNullEvent()),
+                DatabaseId = DatabaseId.Render(LogEventInfo.CreateNullEvent())
             };
         }
         #endregion

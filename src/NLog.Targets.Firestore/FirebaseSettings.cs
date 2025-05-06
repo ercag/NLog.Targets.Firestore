@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +14,9 @@ namespace NLog.Targets.Firestore
 
         [JsonPropertyName("project_id")]
         public string ProjectId { get; set; }
+
+        [JsonPropertyName("database_id")]
+        public string DatabaseId { get; set; }
 
         [JsonPropertyName("private_key_id")]
         public string PrivateKeyId { get; set; }
